@@ -71,4 +71,7 @@ public class ConnectionUtil {
 			e.printStackTrace();
 		}
 	}
+
+    public static void closeConnection(Connection connection) {
+    }
 }

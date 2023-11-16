@@ -62,11 +62,11 @@ public class DeleteMessageByMessageIdTest {
         int status = response.statusCode();
 
         Assert.assertEquals(200, status);
-
-        Message expectedResult = new Message(1, 1, "test message 1", 1669947792);
         Message actualResult = objectMapper.readValue(response.body().toString(), Message.class);
+        Message expectedResult = new Message(1, 1, "test message 1", 1669947792);
         Assert.assertEquals(expectedResult, actualResult);
     }
+   
 
     /**
      * Sending an http request to DELETE localhost:8080/messages/100 (message does NOT exists)
