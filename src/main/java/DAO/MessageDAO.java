@@ -139,34 +139,28 @@ public class MessageDAO {
         }
         return new ArrayList<>();
     }
-
     public static Message getMessageById(int messageId) {
         try (Connection connection = ConnectionUtil.getConnection()) {
             String sql = "SELECT * FROM Message WHERE message_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, messageId);
-
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        // Map the result set to a Message object
-                        return mapResultSetToMessage(resultSet);
-                    }
+    
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    // Create a Message object based on retrieved data
+                    Message message = new Message();
+                    message.setMessage_id(resultSet.getInt("message_id"));
+                    message.setPosted_by(resultSet.getInt("posted_by"));
+                    message.setMessage_text(resultSet.getString("message_text"));
+                    message.setTime_posted_epoch(resultSet.getLong("time_posted_epoch"));
+    
+                    return message; // Return the retrieved message object
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            e.printStackTrace();
         }
-        return null; // Message not found
-    }
-
-    private static Message mapResultSetToMessage(ResultSet resultSet) throws SQLException {
-        // Map the columns from the result set to a Message object
-        int message_id = resultSet.getInt("message_id");
-        int posted_by = resultSet.getInt("posted_by");
-        String message_text = resultSet.getString("message_text");
-        long time_posted_epoch = resultSet.getLong("time_posted_epoch");
-
-        return new Message(message_id, posted_by, message_text, time_posted_epoch);
+        return null; // Return null if message retrieval failed or not found
     }
 
    

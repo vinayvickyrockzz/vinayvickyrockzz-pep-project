@@ -91,10 +91,10 @@ public static List<Message> getMessagesByUser(int userId) {
     }
    
 
-    public static boolean deleteMessageByMessageId(int messageId) {
+   public static boolean deleteMessageByMessageId(int messageId) {
             return MessageDAO.deleteMessageByMessageId(messageId);
         }
-
+       
 
 
 

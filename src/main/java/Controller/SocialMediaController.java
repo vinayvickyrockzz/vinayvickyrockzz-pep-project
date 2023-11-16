@@ -109,13 +109,12 @@ public class SocialMediaController {
 
         int messageId = context.pathParamAsClass("messageId", Integer.class).get();
         boolean messageDeleted = MessageService.deleteMessageByMessageId(messageId);
-
         if (messageDeleted) {
             context.status(200);
         } else {
             context.status(200);
         }
-    }
+}
     
     private void updateMessageTextHandler(Context context) throws JsonProcessingException {
         int messageId = context.pathParamAsClass("messageId", Integer.class).get();
